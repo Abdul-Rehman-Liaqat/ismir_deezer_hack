@@ -28,7 +28,7 @@ with open('lyric_database/aligned/Test/Sing/30_Seconds_to_Mars_-_Kings_and_Queen
 
 
 
-text = 'We were the kings and queens of promise. We were the victims of ourselves'
+text = 'We were the kings and queens of promise We were the victims of ourselves'
 generative_text = 'We Have only broken our dreams'
 
 
@@ -40,3 +40,5 @@ file_name = []
 for tok in token:
     ind = words.index(tok.upper())
     file_name.append(str(start[ind])+'_'+str(end[ind])+'_'+tok+'.wav')
+    
+    
