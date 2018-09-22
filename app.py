@@ -1,15 +1,37 @@
 from util import *
+from flask import Flask
+from flask_restplus import Resource, Api,reqparse
+from flask import request, jsonify
+from flask import Flask
+from flask_restplus import Resource, Api,reqparse
+from flask import Flask, request, jsonify
+import requests
+import json
+import werkzeug
+import parsers
+import time
 
-#text_input = 'Try to chase me\nSo call me, maybe\nHey I just met you\n'
-#sentence_to_music(text_input)
+
+app = Flask(__name__)
+api = Api(app)
+
+@api.route('/words_to_music')
+class WordsToMusic(Resource):
+    @api.expect(parsers.file_upload)
+    def get(self):
+        generative_other = 'bad and this is crazy but you look right'
+        text = generative_other          
+        output_file = words_to_music(text)
+        return jsonify('Output file wrote at {}'.format(output_file))
+
+@api.route('/sentence_to_music')
+class Sentence_To_Music(Resource):
+    @api.expect(parsers.file_upload)
+    def get(self):
+        text_input = 'Try to chase me\nSo call me, maybe\nHey I just met you\n'
+        output_file = sentence_to_music(text_input)
+        return jsonify('Output file wrote at {}'.format(output_file))
     
-
-
-
-text_verse = 'We were the kings and queens of promise We were the victims of ourselves'
-generative_text = 'We Have only broken our dreams'
-generative_other = 'bad and this is crazy but you look right'
-generative_rap = 'You want it for a long time'
-text = generative_other
-  
-words_to_music(text)
+            
+if __name__ == '__main__':
+    app.run(host='127.0.0.1', port=5000,debug=True)

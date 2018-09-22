@@ -1,5 +1,7 @@
 import subprocess
 import numpy as np
+import pandas as pd
+import os
 
 def split_song_to_wordMusic(words_lyric_path,audiofile,output_path='songs_wav/result/'):
     words = []
@@ -42,7 +44,8 @@ def make_music(file_name,output_file = "songs_wav/text_to_music/temp.wav",output
     for i,file in enumerate(file_name[2:]):
         subprocess.run(['cp',output_file,output_file_cp])
         subprocess.run(['sox',output_file_cp,'songs_wav/result/'+file,output_file])   
-    
+    return output_file
+
 def calc_time_per_char(words_lyric_path):
     f = open(words_lyric_path)
     lyric = f.read()
@@ -177,6 +180,7 @@ def make_sentence_music(file_name, output_file='songs_wav/text_to_music/temp_sen
     for i,file in enumerate(file_name[2:]):
         subprocess.run(['cp',output_file,output_file_cp])
         subprocess.run(['sox',output_file_cp,'songs_wav/result3/'+file,output_file])   
+    return output_file
 
 
 def sentence_to_music(text_input):
@@ -186,7 +190,10 @@ def sentence_to_music(text_input):
     df = pd.DataFrame([start, end, sentences])
     text_input = 'Try to chase me\nSo call me, maybe\nHey I just met you\n'
     file_name = find_sentenceMusic(text_input, sentences, start, end, df)
-    make_sentence_music(file_name)
+    output_file = make_sentence_music(file_name)
+    cwd = os.getcwd()
+ #   cwd = cwd+'/songs_wav/'
+    return cwd+'/'+output_file
 
 
 def words_to_music(text):
@@ -206,5 +213,8 @@ def words_to_music(text):
         char_dur_average_list.append(calc_avetime_per_char(char_dur_time))    
     char_dur_average = [sum(x) for x in zip(char_dur_average_list[0], char_dur_average_list[1])]            
     file_name = find_best_wordMusic(words_lyric_path,text,words,start,end)
-    make_music(file_name)
+    output_file = make_music(file_name)
+    cwd = os.getcwd()
+#    cwd = cwd+'/songs_wav/'
+    return cwd+'/'+output_file
 
