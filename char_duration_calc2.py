@@ -1,19 +1,12 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-Created on Sat Sep 22 18:28:55 2018
-
-@author: natsuki
-"""
 
 import numpy as np
 
-audiofile = 'songs_wav/30_Seconds_to_Mars_-_Kings_and_Queens.wav'
-text_verse = 'We were the kings and queens of promise We were the victims of ourselves'
-generative_text = 'We Have only broken our dreams'
-generative_other = 'Into the night'
-text = generative_other
-words_lyric_path = 'lyric_database/aligned/Test/Sing/30_Seconds_to_Mars_-_Kings_and_Queens.words'
+#audiofile = 'songs_wav/30_Seconds_to_Mars_-_Kings_and_Queens.wav'
+#text_verse = 'We were the kings and queens of promise We were the victims of ourselves'
+#generative_text = 'We Have only broken our dreams'
+#generative_other = 'Into the night'
+#text = generative_other
+#words_lyric_path = 'lyric_database/aligned/Test/Sing/30_Seconds_to_Mars_-_Kings_and_Queens.words'
 
 def calc_time_per_char(words_lyric_path):
     f = open(words_lyric_path)
@@ -53,24 +46,26 @@ def calc_avetime_per_char(char_dur_time):
             char_dur_average.append(np.mean(avg_time))
     return char_dur_average
         
-def time_char(c):
-    return char_dur_average[ord(c) - ord('A')]
+def time_char(c,char_dur_average):
+    print(ord(c))
+    print(ord('A'))
+    return char_dur_average[ord(c.upper()) - ord('A')]
 
-def time_word(word):
+def time_word(word,char_dur_average):
     duration = 0
     for c in word:
-        duration += time_char(c)
+        duration += time_char(c,char_dur_average)
     return duration
 
-def best_word_time(word, timelist):
-    avgtime = time_word(word)
+def best_word_time(word, timelist,char_dur_average):
+    avgtime = time_word(word,char_dur_average)
     
     idx = np.abs(np.asarray(timelist) - avgtime).argmin()
     return timelist[idx]
 
 
-char_dur_time = calc_time_per_char(words_lyric_path)
-char_dur_average = calc_avetime_per_char(char_dur_time)
-time_a = [0.5, 1, 1.5]
-print(time_word('WORD'))
-print(best_word_time('WORD', time_a))
+#char_dur_time = calc_time_per_char(words_lyric_path)
+#char_dur_average = calc_avetime_per_char(char_dur_time)
+#time_a = [0.5, 1, 1.5]
+#print(time_word('WORD'))
+#print(best_word_time('WORD', time_a))

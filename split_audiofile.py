@@ -1,5 +1,5 @@
 import subprocess
-
+from util import *
 
 audiofile = 'songs_wav/30_Seconds_to_Mars_-_Kings_and_Queens.wav'
 text_verse = 'We were the kings and queens of promise We were the victims of ourselves'
@@ -8,7 +8,7 @@ generative_other = 'Into the night'
 text = generative_other
 words_lyric_path = 'lyric_database/aligned/Test/Sing/30_Seconds_to_Mars_-_Kings_and_Queens.words'
 
-def split_song_to_wordMusic(words_lyric_path,output_path='songs_wav/result/'):
+def split_song_to_wordMusic(words_lyric_path):
     words = []
     start = []
     end = []
@@ -20,7 +20,7 @@ def split_song_to_wordMusic(words_lyric_path,output_path='songs_wav/result/'):
             start.append(float(data[0]))
             end.append(float(data[1]))
             if(words[-1] != 'OH' or words[-1] != 'sp'):
-                subprocess.run(['sox',audiofile,'{}_{}_{}.wav'.format(output_path,start[-1],end[-1],words[-1]),'trim',str(start[-1]),'='+str(end[-1])])
+                subprocess.run(['sox',audiofile,'songs_wav/result/{}_{}_{}.wav'.format(start[-1],end[-1],words[-1]),'trim',str(start[-1]),'='+str(end[-1])])
     return words,start,end
 
 
