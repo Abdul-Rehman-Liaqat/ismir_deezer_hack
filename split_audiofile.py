@@ -49,6 +49,7 @@ subprocess.run(['sox','songs_wav/result/'+file1,'songs_wav/result/'+file2,"songs
 for i,file in enumerate(file_name[2:]):
     subprocess.run(['sox','songs_wav/text_to_music/temp.wav','songs_wav/result/'+file,"songs_wav/text_to_music/temp.wav"])   
     
-    
+
+
 #    109.0625_109.1225_WE.wav
 #     0.6425_1.2725_THE.wav
